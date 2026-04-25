@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "8000:8000"
+    environment:
+      - STORAGE_DIR=/data/storage
+    volumes:
+      - server_storage:/data/storage
+
+  client:
+    build: ./client
+    depends_on:
+      - server
+    ports:
+      - "8501:8501"
+    environment:
+      - SERVER_URL=http://server:8000
+
+volumes:
+  server_storage:
+
